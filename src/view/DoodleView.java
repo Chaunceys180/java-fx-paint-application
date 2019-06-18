@@ -20,6 +20,7 @@ import model.decorator.HeaderDecorator;
 import model.decorator.IDecorate;
 import model.decorator.TitleDecorator;
 
+import java.io.File;
 import java.util.Arrays;
 
 /**
@@ -72,7 +73,9 @@ public class DoodleView extends Application {
         mainPanel.setCenter(getCanvas());
 
         Scene scene = new Scene(mainPanel, WIN_WIDTH, WIN_HEIGHT);
-        scene.getStylesheets().add("styles.css");
+        String path = System.getProperty("user.dir") + "\\src\\styles\\" + "styles.css";
+        File file = new File(path);
+        scene.getStylesheets().add(file.toURI().toString());
 
         return scene;
     }
@@ -193,7 +196,7 @@ public class DoodleView extends Application {
         HBox editPanel = new HBox();
         editPanel.setId("toolbar-edits");
 
-        String[] edits = {"undo", "redoShape"};
+        String[] edits = {"undo", "redo"};
         Button[] buttons = new Button[edits.length];
 
         for (int i = 0; i < edits.length; i++) {
@@ -219,10 +222,9 @@ public class DoodleView extends Application {
     }
 
     private ImageView getButtonIcon(String text) {
-        String path;
-        path = System.getProperty("user.dir") + "\\src\\assets\\" + text.toLowerCase() + ".png";
-        System.out.println(path);
-        ImageView image = new ImageView(path);
+        String path = System.getProperty("user.dir") + "\\src\\assets\\" + text.toLowerCase() + ".png";
+        File file = new File(path);
+        ImageView image = new ImageView(file.toURI().toString());
         image.setFitHeight(SHAPE_ICON_SIZE);
         image.setFitWidth(SHAPE_ICON_SIZE);
         return image;
